@@ -2,27 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.1.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
     <groupId>com.github.anavarro</groupId>
     <artifactId>kotlin-test-sample</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>kotlin-test-sample</name>
     <description>Demo project for Spring Boot</description>
-
     <properties>
         <java.version>1.8</java.version>
         <kotlin.version>1.3.11</kotlin.version>
         <spek.version>2.0.0-alpha.2</spek.version>
         <spring-boot-starter-test.version>2.1.1.RELEASE</spring-boot-starter-test.version>
         <junit-jupiter-engine.version>5.3.2</junit-jupiter-engine.version>
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+        <mockk.version>1.8.3</mockk.version>
+        <kluent.version>1.44</kluent.version>
     </properties>
-
-
     <repositories>
         <repository>
             <id>spek-dev</id>
@@ -34,8 +28,8 @@
             <url>https://jcenter.bintray.com/</url>
         </repository>
     </repositories>
-
     <dependencies>
+        <!-- kotlin -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
@@ -46,23 +40,34 @@
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+        <!-- spring-test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${spring-boot-starter-test.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- junit 5 api-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter-engine.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- junit 5 endgine -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit-jupiter-engine.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- junit 5 engine for junit 4 test -->
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>${junit-jupiter-engine.version}</version>
         </dependency>
+        <!-- spek -->
         <dependency>
             <groupId>org.spekframework.spek2</groupId>
             <artifactId>spek-dsl-jvm</artifactId>
@@ -75,6 +80,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- spek run on junit 5 engine-->
         <dependency>
             <groupId>org.spekframework.spek2</groupId>
             <artifactId>spek-runner-junit5</artifactId>
@@ -86,12 +92,35 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- mockk -->
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>${mockk.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- kluent -->
+        <dependency>
+            <groupId>org.amshove.kluent</groupId>
+            <artifactId>kluent</artifactId>
+            <version>${kluent.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -102,7 +131,6 @@
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
-
                             </sourceDirs>
                         </configuration>
                     </execution>
@@ -153,6 +181,10 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${maven-surefire-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
