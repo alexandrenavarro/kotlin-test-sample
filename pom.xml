@@ -17,6 +17,7 @@
         <mockk-version>1.8.3</mockk-version>
         <kluent-version>1.44</kluent-version>
         <jacoco-maven-plugin-version>0.8.2</jacoco-maven-plugin-version>
+        <jgiven-junit-version>0.17.0</jgiven-junit-version>
     </properties>
     <repositories>
         <repository>
@@ -106,6 +107,19 @@
             <version>${kluent-version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- jgiven -->
+        <dependency>
+            <groupId>com.tngtech.jgiven</groupId>
+            <artifactId>jgiven-junit</artifactId>
+            <version>${jgiven-junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.jgiven</groupId>
+            <artifactId>jgiven-junit5</artifactId>
+            <version>${jgiven-junit-version}</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
     <build>
@@ -174,6 +188,22 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.tngtech.jgiven</groupId>
+                <artifactId>jgiven-maven-plugin</artifactId>
+                <version>${jgiven-junit-version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <format>html</format>
+                </configuration>
             </plugin>
             <plugin>
             <artifactId>maven-surefire-plugin</artifactId>

@@ -1,0 +1,72 @@
+{
+  "className": "com.github.anavarro.kotlintestsample.CalculatorFeature",
+  "name": "Feature: A calculator",
+  "scenarios": [
+    {
+      "description": "Scenario: Add 2 numbers",
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "words": [
+                {
+                  "value": "When: Add 1 with 1"
+                }
+              ]
+            },
+            {
+              "words": [
+                {
+                  "value": "Then: it should be equals to 2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "caseNr": 2,
+          "steps": [
+            {
+              "words": [
+                {
+                  "value": "When: Add 2 with 2"
+                }
+              ]
+            },
+            {
+              "words": [
+                {
+                  "value": "Then: it should be equals to 4"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Scenario: Sub 2 numbers",
+      "scenarioCases": [
+        {
+          "steps": [
+            {
+              "words": [
+                {
+                  "value": "When: Sub 1 with 1"
+                }
+              ]
+            },
+            {
+              "words": [
+                {
+                  "value": "Then: it should be equals to 0"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
