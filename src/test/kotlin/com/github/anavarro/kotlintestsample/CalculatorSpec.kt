@@ -9,6 +9,8 @@ import org.spekframework.spek2.style.specification.describe
 
 object CalculatorSpec: Spek({
 
+
+
     describe("A calculator") {
         val calculator by memoized { Calculator() }
 
