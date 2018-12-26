@@ -29,6 +29,30 @@ object CalculatorFeature : Spek({
 
         }
 
+        Scenario("Add 2 numbers 2 + 1") {
+
+            When("Add 2 with 2") {
+                result = calculator.substract(2, 1)
+            }
+
+            Then("it should be equals to 2") {
+                Assertions.assertThat(result).isEqualTo(1)
+            }
+
+        }
+
+        Scenario("Add 2 numbers 2 + 2") {
+
+            When("Add 3 with 3") {
+                result = calculator.substract(2, 1)
+            }
+
+            Then("it should be equals to 3") {
+                Assertions.assertThat(result).isEqualTo(1)
+            }
+
+        }
+
     }
 
     Feature("A Person Feature") {
@@ -58,7 +82,7 @@ object CalculatorFeature : Spek({
         }
     }
 
-    this.registerListener(JGivenJsonGeneratorListener())
+    this.registerListener(JGivenJsonGeneratorListener(listOf("myTag", "tag2")))
 })
 
 

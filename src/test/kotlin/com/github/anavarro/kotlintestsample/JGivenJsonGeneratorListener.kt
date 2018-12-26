@@ -4,10 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 
-class JGivenJsonGeneratorListener() : LifecycleListener {
+class JGivenJsonGeneratorListener(val tags: List<String> = emptyList()) : LifecycleListener {
 
     val reportMap: MutableMap<String, JGivenReport> = mutableMapOf()
 
@@ -18,22 +17,26 @@ class JGivenJsonGeneratorListener() : LifecycleListener {
         var words = test.path.toString().split("/")
         val executedTest = ExecutedTest("${words[0]}.${words[1]}", words[2], words[3], words[4])
 
-        val reportKey = executedTest.className + " " + executedTest.featureName
+        val reportKey = executedTest.className + "-" + executedTest.featureName.replace(":", "").replace(" ", "_")
+
+        var tagMap = mutableMapOf<String, Tag>()
+        for (tag in tags) {
+            tagMap.set(tag, Tag(tag, tag))
+        }
+
         if (!reportMap.containsKey(reportKey)) {
-            reportMap[reportKey] = JGivenReport(executedTest.className, executedTest.featureName)
+            reportMap[reportKey] = JGivenReport(executedTest.className, executedTest.featureName, tagMap)
         }
         val report = reportMap[reportKey]
 
-        report?.addExectutedTestPath(executedTest)
+        report?.addExectutedTestPath(executedTest, tags)
 
         val result = ObjectMapper().writeValueAsString(report)
 
-        // TODO not optimize at all
-        for (value in reportMap.values) {
-            Files.deleteIfExists(Paths.get("target/jgiven-reports/json/${value.className}${value.name}.json"))
-            Files.write(Paths.get("target/jgiven-reports/json/${value.className}${value.name}..json"), listOf(result))
+        // TODO optimize it
+        Files.deleteIfExists(Paths.get("target/jgiven-reports/json/$reportKey.json"))
+        Files.write(Paths.get("target/jgiven-reports/json/$reportKey.json"), listOf(result))
 
-        }
 
     }
 
@@ -47,13 +50,14 @@ data class ExecutedTest(val className: String,
 
 data class JGivenReport(val className: String,
                         val name: String,
+                        val tagMap: MutableMap<String, Tag> = mutableMapOf(),
                         val scenarios: MutableList<Scenario> = mutableListOf()) {
 
-    fun addExectutedTestPath(executedTest: ExecutedTest) {
+    fun addExectutedTestPath(executedTest: ExecutedTest, tags: List<String> = emptyList()) {
         var existedScenarios = scenarios.filter { it.description == executedTest.scenarioName }
         val scenario : Scenario
         if (existedScenarios.isEmpty()) {
-            scenario = Scenario(executedTest.scenarioName)
+            scenario = Scenario(executedTest.scenarioName, tags)
             val caseNr = scenario.scenarioCases.size + 1
             scenario.scenarioCases.add(UseCase(caseNr))
             scenarios.add(scenario)
@@ -66,7 +70,10 @@ data class JGivenReport(val className: String,
     }
 }
 
+data class Tag(val fullType: String, val type: String)
+
 data class Scenario(val description: String,
+                    val tagIds: List<String> = listOf(),
                     val scenarioCases: MutableList<UseCase> = mutableListOf())
 
 data class UseCase(val caseNr: Int,

@@ -10,6 +10,7 @@ public class MyShinyJGivenTest
         extends ScenarioTest<GivenSomeState, WhenSomeAction, ThenSomeOutcome> {
 
     @Test
+    @ExampleCategory
     public void something_should_happen() {
         given().some_state();
         when().some_action();
