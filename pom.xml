@@ -9,19 +9,21 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
-        <kotlin.version>1.3.11</kotlin.version>
+        <kotlin.version>1.3.21</kotlin.version>
         <spek-version>2.0.0-rc.1</spek-version>
-        <spring-boot-starter-test-version>2.1.1.RELEASE</spring-boot-starter-test-version>
+        <!-- change to 2.0.0 or 2.0.1, some tests are not anymore runned -->
+        <spring-boot-starter-test-version>2.1.3.RELEASE</spring-boot-starter-test-version>
         <junit-jupiter-engine-version>5.3.2</junit-jupiter-engine-version>
-        <maven-surefire-plugin-version>2.22.1</maven-surefire-plugin-version>
-        <mockk-version>1.8.3</mockk-version>
-        <kluent-version>1.44</kluent-version>
-        <jacoco-maven-plugin-version>0.8.2</jacoco-maven-plugin-version>
-        <jgiven-junit-version>0.17.0</jgiven-junit-version>
-        <lombok-version>1.18.4</lombok-version>
+        <maven-surefire-plugin-version>3.0.0-M3</maven-surefire-plugin-version>
+        <mockk-version>1.9.2.kotlin12</mockk-version>
+        <kluent-version>1.48</kluent-version>
+        <jacoco-maven-plugin-version>0.8.3</jacoco-maven-plugin-version>
+        <jgiven-junit-version>0.17.1</jgiven-junit-version>
+        <lombok-version>1.18.6</lombok-version>
         <annotation-version>0.0.9</annotation-version>
         <klaxon-version>5.0.1</klaxon-version>
-        <jackson-version>2.9.7</jackson-version>
+        <jackson-version>2.9.8</jackson-version>
+        <maven-compiler-plugin-version>3.8.0</maven-compiler-plugin-version>
     </properties>
     <repositories>
         <repository>
@@ -150,6 +152,15 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin-version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
